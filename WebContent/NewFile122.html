@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+  <head>
+    <link data-require="bootstrap-css@*" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link data-require="font-awesome@*" data-semver="4.2.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+    <script data-require="angular.js@*" data-semver="1.4.0-beta.3" src="https://code.angularjs.org/1.4.0-beta.3/angular.js"></script>
+    <script src="script.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Angular Scopes are Hard</h1>
+      <div class="row">
+        <div class="col-sm-6" ng-controller="BadController">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                Not using an object = <i class="fa fa-frown-o"></i>
+                <small class="pull-right"><span class="label label-default">BadController</span></small>
+              </h4>
+            </div>
+            <div class="panel-body">
+              <div ng-if="true" class="panel panel-info">
+                <div class="panel-body">
+                  What's the most patriotic color?
+                  <select ng-model="myModel" ng-options="color for color in models" style="width: auto; display: inline;" class="form-control input-sm">
+                    <option value="">Pick a color</option>
+                  </select>
+                  <div style="margin-top: 1em;">Color <mark>inside</mark> isolated scope: <code>{{myModel|json}}</code></div>
+                </div>
+                <div class="panel-footer">
+                  <p class="small text-right" style="margin: 0;"><i class="fa fa-info-circle"></i> The <code>ng-if</code> directive created an isolated scope.</p>
+                </div>
+              </div>
+              This box is not in an isolate scope.
+              <select ng-model="myModel" ng-options="color for color in models" style="width: auto; display: inline;" class="form-control input-sm">
+                <option value="">Pick a color</option>
+              </select>
+              <div style="margin-top: 1em;">Color <mark>outside</mark> isolated scope: <code>{{myModel|json}}</code></div>
+            </div>
+            <div class="panel-footer">
+              Updates from outside won't appear inside after a color is chosen inside.
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6" ng-controller="GoodController">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                Using an object = <i class="fa fa-smile-o"></i>
+                <small class="pull-right"><span class="label label-default">GoodController</span></small>
+              </h4>
+            </div>
+            <div class="panel-body">
+              <div ng-if="true" class="panel panel-info">
+                <div class="panel-body">
+                  What's the most patriotic color?
+                  <select ng-model="uiState.myModel" ng-options="color for color in uiState.models" style="width: auto; display: inline;" class="form-control input-sm">
+                    <option value="">Pick a color</option>
+                  </select>
+                  <div style="margin-top: 1em;">Color <mark>inside</mark> isolated scope: <code>{{uiState.myModel|json}}</code></div>
+                </div>
+                <div class="panel-footer">
+                  <p class="small text-right" style="margin: 0;"><i class="fa fa-info-circle"></i> The <code>ng-if</code> directive created an isolated scope.</p>
+                </div>
+              </div>
+              This box is not in an isolate scope.
+              <select ng-model="uiState.myModel" ng-options="color for color in uiState.models" style="width: auto; display: inline;" class="form-control input-sm">
+                <option value="">Pick a color</option>
+              </select>
+              <div style="margin-top: 1em;">Color <mark>outside</mark> isolated scope: <code>{{uiState.myModel|json}}</code></div>
+            </div>
+            <div class="panel-footer">
+              Updates from outside will appear inside even after a color is chosen inside.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
